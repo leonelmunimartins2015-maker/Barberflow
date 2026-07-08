@@ -91,6 +91,8 @@ def listar_agendamentos():
 
             ag = item.to_dict()
 
+            ag["id"] = item.id
+
             lista.append(ag)
 
     return lista
