@@ -198,7 +198,25 @@ def agenda():
 
     config = pegar_configuracao()
 
-    agendamentos = listar_agendamentos()
+    todos_agendamentos = listar_agendamentos()
+
+    hoje = datetime.now().date()
+
+    limite = hoje + timedelta(
+        days=config["semanas_agenda"] * 7
+    )
+
+    agendamentos = []
+
+    for ag in todos_agendamentos:
+
+        data_ag = datetime.strptime(
+            ag["data"],
+            "%d/%m/%Y"
+        ).date()
+
+        if hoje <= data_ag <= limite:
+            agendamentos.append(ag)
 
 
     return render_template(
