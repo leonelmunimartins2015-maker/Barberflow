@@ -1,12 +1,13 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, session, redirect
 from config import NOME_SISTEMA, VERSAO
 from firebase import iniciar_firebase
 from datetime import datetime, timedelta
 
 app = Flask(__name__)
 
-db = iniciar_firebase()
+app.secret_key = "BarberFlow2026"
 
+db = iniciar_firebase()
 
 def pegar_configuracao():
 
