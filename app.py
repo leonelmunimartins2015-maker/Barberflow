@@ -86,8 +86,11 @@ def inicio():
 @app.route("/admin")
 def admin():
 
+    config = pegar_configuracao()
+
     return render_template(
-        "admin.html"
+        "admin.html",
+        config=config
     )
 
 
