@@ -357,7 +357,9 @@ def salvar_configuracoes():
                 "pigmentacao": pigmentacao,
                 "corte_barba": corte_barba,
                 "corte_sobrancelha": corte_sobrancelha,
-                "barba": barba
+                "barba": barba,
+                "corte_barba_pigmentacao": corte_barba_pigmentacao
+                
             })
 
     return '''
