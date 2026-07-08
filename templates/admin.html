@@ -75,18 +75,25 @@ value="{{ config.fim_expediente }}"
 
 <label>Agenda aberta por</label>
 
-<select>
+<select name="semanas_agenda">
 
-<option>1 semana</option>
+<option value="1" {% if config.semanas_agenda == 1 %}selected{% endif %}>
+1 semana
+</option>
 
-<option selected>2 semanas</option>
+<option value="2" {% if config.semanas_agenda == 2 %}selected{% endif %}>
+2 semanas
+</option>
 
-<option>3 semanas</option>
+<option value="3" {% if config.semanas_agenda == 3 %}selected{% endif %}>
+3 semanas
+</option>
 
-<option>4 semanas</option>
+<option value="4" {% if config.semanas_agenda == 4 %}selected{% endif %}>
+4 semanas
+</option>
 
 </select>
-
 <button>
 
 Salvar Configurações
