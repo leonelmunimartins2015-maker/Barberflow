@@ -188,10 +188,16 @@ Agendar
 
 <h2>Agendamentos</h2>
 
+<input
+type="text"
+id="pesquisa"
+placeholder="🔍 Pesquisar cliente..."
+onkeyup="filtrarAgendamentos()">
+
 
 {% for item in agendamentos %}
 
-<div class="agendamento">
+<div class="agendamento" data-nome="{{ item.nome|lower }}">
 
 <p>
 Cliente: {{ item.nome }}
@@ -503,7 +509,34 @@ hoje.toISOString().split("T")[0];
 
 document.getElementById("data").max =
 limite.toISOString().split("T")[0];
+    
+function filtrarAgendamentos(){
 
+    let texto =
+    document.getElementById("pesquisa")
+    .value
+    .toLowerCase();
+
+    let lista =
+    document.querySelectorAll(".agendamento");
+
+    lista.forEach(function(item){
+
+        let nome = item.dataset.nome;
+
+        if(nome.includes(texto)){
+
+            item.style.display = "block";
+
+        }else{
+
+            item.style.display = "none";
+
+        }
+
+    });
+
+}
     </script>
 
 
