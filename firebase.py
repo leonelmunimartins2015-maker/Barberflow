@@ -1,17 +1,21 @@
-# Conexão com Firebase - BarberFlow
-
 import firebase_admin
 from firebase_admin import credentials, firestore
+import os
+import json
 
 
 def iniciar_firebase():
 
     try:
+
+        chave = os.environ.get("FIREBASE_KEY")
+
         cred = credentials.Certificate(
-            "firebase_key.json"
+            json.loads(chave)
         )
 
-        firebase_admin.initialize_app(cred)
+        if not firebase_admin._apps:
+            firebase_admin.initialize_app(cred)
 
         db = firestore.client()
 
