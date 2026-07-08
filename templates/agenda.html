@@ -10,7 +10,7 @@
 
 body {
     margin:0;
-    font-family:Arial;
+    font-family:Arial,sans-serif;
     background:#111;
     color:white;
     text-align:center;
@@ -35,7 +35,6 @@ input, select {
 
 }
 
-
 button {
 
     width:95%;
@@ -48,7 +47,6 @@ button {
     font-size:17px;
 
 }
-
 
 .agendamento {
 
@@ -63,11 +61,9 @@ a {
     color:#c89b3c;
 }
 
-
 </style>
 
 </head>
-
 
 <body>
 
@@ -88,7 +84,7 @@ placeholder="Nome do cliente"
 required>
 
 
-<select name="servico" required>
+<select name="servico" id="servico" onchange="calcularDuracao()" required>
 
 <option value="">
 Escolha o serviço
@@ -131,8 +127,14 @@ required>
 
 <input 
 type="hidden"
+id="duracao"
 name="duracao"
 value="30">
+
+
+<p id="mostrarDuracao">
+Duração: 30 minutos
+</p>
 
 
 <button type="submit">
@@ -166,6 +168,10 @@ Data: {{ item.data }}
 Horário: {{ item.hora }}
 </p>
 
+<p>
+Duração: {{ item.duracao }} minutos
+</p>
+
 </div>
 
 
@@ -186,6 +192,47 @@ Voltar
 
 
 </div>
+
+
+<script>
+
+function calcularDuracao(){
+
+    let servico = document.getElementById("servico").value;
+
+    let duracao = 30;
+
+
+    if(servico === "Corte"){
+        duracao = 30;
+    }
+
+    else if(servico === "Corte e pigmentação"){
+        duracao = 60;
+    }
+
+    else if(servico === "Corte e barba"){
+        duracao = 40;
+    }
+
+    else if(servico === "Corte e sobrancelha"){
+        duracao = 35;
+    }
+
+    else if(servico === "Barba"){
+        duracao = 15;
+    }
+
+
+    document.getElementById("duracao").value = duracao;
+
+
+    document.getElementById("mostrarDuracao").innerHTML =
+    "Duração: " + duracao + " minutos";
+
+}
+
+</script>
 
 
 </body>
