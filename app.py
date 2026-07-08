@@ -197,7 +197,8 @@ def agenda():
     inicio_expediente=config["inicio_expediente"],
     fim_expediente=config["fim_expediente"],
     semanas_agenda=config["semanas_agenda"],
-    config=config
+    config=config,
+    session=session
 )
 
 
