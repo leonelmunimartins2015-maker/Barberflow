@@ -17,16 +17,13 @@ body {
 }
 
 .container {
-
     width:90%;
     max-width:450px;
     margin:30px auto;
     background:#222;
     padding:25px;
     border-radius:15px;
-
 }
-
 
 input, select {
 
@@ -37,7 +34,6 @@ input, select {
     border:0;
 
 }
-
 
 button {
 
@@ -52,7 +48,6 @@ button {
 
 }
 
-
 .agendamento {
 
     background:#333;
@@ -62,11 +57,9 @@ button {
 
 }
 
-
 a {
     color:#c89b3c;
 }
-
 
 </style>
 
@@ -88,9 +81,7 @@ Expediente:
 </p>
 
 
-
 <form method="POST" action="/cadastrar_agendamento">
-
 
 
 <input
@@ -100,51 +91,41 @@ placeholder="Nome do cliente"
 required>
 
 
-
 <select id="servico" name="servico" onchange="gerarHorarios()" required>
-
 
 <option value="">
 Escolha o serviço
 </option>
 
-
 <option value="Corte" data-duracao="30">
 Corte - 30 minutos
 </option>
-
 
 <option value="Corte e pigmentação" data-duracao="60">
 Corte e pigmentação - 60 minutos
 </option>
 
-
 <option value="Corte e barba" data-duracao="40">
 Corte e barba - 40 minutos
 </option>
-
 
 <option value="Corte e sobrancelha" data-duracao="35">
 Corte e sobrancelha - 35 minutos
 </option>
 
-
 <option value="Barba" data-duracao="15">
 Barba - 15 minutos
 </option>
 
-
 </select>
 
 
-
-<input 
+<input
 type="date"
 id="data"
 name="data"
 onchange="gerarHorarios()"
 required>
-
 
 
 <select id="hora" name="hora" required>
@@ -156,7 +137,6 @@ Escolha o horário
 </select>
 
 
-
 <input
 type="hidden"
 id="duracao"
@@ -164,11 +144,9 @@ name="duracao"
 value="30">
 
 
-
 <p id="mostrarDuracao">
 Duração: 30 minutos
 </p>
-
 
 
 <button>
@@ -176,54 +154,30 @@ Agendar
 </button>
 
 
-
 </form>
-
 
 
 
 <h2>Agendamentos</h2>
 
 
-
 {% for item in agendamentos %}
-
 
 <div class="agendamento">
 
-<p>
-Cliente: {{item.nome}}
-</p>
-
-<p>
-Serviço: {{item.servico}}
-</p>
-
-<p>
-Data: {{item.data}}
-</p>
-
-<p>
-Horário: {{item.hora}}
-</p>
-
-<p>
-Duração: {{item.duracao}} minutos
-</p>
+<p>Cliente: {{item.nome}}</p>
+<p>Serviço: {{item.servico}}</p>
+<p>Data: {{item.data}}</p>
+<p>Horário: {{item.hora}}</p>
+<p>Duração: {{item.duracao}} minutos</p>
 
 </div>
 
-
 {% else %}
 
-
-<p>
-Nenhum agendamento.
-</p>
-
+<p>Nenhum agendamento.</p>
 
 {% endfor %}
-
 
 
 <br>
@@ -233,9 +187,7 @@ Voltar
 </a>
 
 
-
 </div>
-
 
 
 
@@ -246,11 +198,43 @@ let agendamentos = {{ agendamentos | tojson }};
 
 
 
+function configurarDatas(){
+
+    let hoje = new Date();
+
+
+    let limite = new Date();
+
+    limite.setDate(
+        hoje.getDate()+15
+    );
+
+
+    let campo =
+    document.getElementById("data");
+
+
+    campo.min =
+    hoje.toISOString().split("T")[0];
+
+
+    campo.max =
+    limite.toISOString().split("T")[0];
+
+}
+
+
+
+configurarDatas();
+
+
+
 function minutos(hora){
 
     let p = hora.split(":");
 
-    return parseInt(p[0]) * 60 + parseInt(p[1]);
+    return parseInt(p[0])*60+
+    parseInt(p[1]);
 
 }
 
@@ -258,111 +242,30 @@ function minutos(hora){
 
 function formatoHora(valor){
 
-    let h = Math.floor(valor / 60);
+    let h=Math.floor(valor/60);
 
-    let m = valor % 60;
+    let m=valor%60;
 
 
     return String(h).padStart(2,"0")
-    + ":"
-    + String(m).padStart(2,"0");
+    +":"
+    +String(m).padStart(2,"0");
 
 }
-
-
-
-function conflito(hora, duracao){
-
-
-    let dataEscolhida =
-    document.getElementById("data").value;
-
-
-    let inicioNovo =
-    minutos(hora);
-
-
-    let fimNovo =
-    inicioNovo + duracao;
-
-
-
-    for(let ag of agendamentos){
-
-
-        if(ag.data == converterData(dataEscolhida)){
-
-
-            let inicioAg =
-            minutos(ag.hora);
-
-
-            let fimAg =
-            inicioAg + parseInt(ag.duracao);
-
-
-
-            if(inicioNovo < fimAg && fimNovo > inicioAg){
-
-                return true;
-
-            }
-
-        }
-
-
-    }
-
-
-    return false;
-
-}
-
-
-
-function converterData(data){
-
-
-    if(data.includes("/")){
-
-        return data;
-
-    }
-
-
-    let partes =
-    data.split("-");
-
-
-    return partes[2]
-    +"/"+
-    partes[1]
-    +"/"+
-    partes[0];
-
-}
-
-
 
 
 
 function gerarHorarios(){
 
 
-    let servico =
-    document.getElementById("servico");
-
-
     let opcao =
-    servico.options[servico.selectedIndex];
+    document.getElementById("servico")
+    .selectedOptions[0];
 
 
     if(!opcao.dataset.duracao){
-
         return;
-
     }
-
 
 
     let duracao =
@@ -374,20 +277,17 @@ function gerarHorarios(){
     duracao;
 
 
-
     document.getElementById("mostrarDuracao").innerHTML =
-    "Duração: "
-    +duracao+
-    " minutos";
+    "Duração: "+duracao+" minutos";
 
 
 
     let inicio =
-    minutos("{{ inicio_expediente }}");
+    minutos("{{inicio_expediente}}");
 
 
     let fim =
-    minutos("{{ fim_expediente }}");
+    minutos("{{fim_expediente}}");
 
 
 
@@ -395,7 +295,7 @@ function gerarHorarios(){
     document.getElementById("hora");
 
 
-    lista.innerHTML = "";
+    lista.innerHTML="";
 
 
 
@@ -406,31 +306,19 @@ function gerarHorarios(){
     ){
 
 
-        let hora =
+        let option =
+        document.createElement("option");
+
+
+        option.value =
         formatoHora(tempo);
 
 
-
-        if(!conflito(hora,duracao)){
-
-
-            let option =
-            document.createElement("option");
+        option.text =
+        formatoHora(tempo);
 
 
-            option.value =
-            hora;
-
-
-            option.text =
-            hora;
-
-
-            lista.appendChild(option);
-
-
-        }
-
+        lista.appendChild(option);
 
     }
 
@@ -439,7 +327,6 @@ function gerarHorarios(){
 
 
 </script>
-
 
 
 </body>
