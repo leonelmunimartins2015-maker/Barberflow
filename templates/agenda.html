@@ -255,8 +255,7 @@ duracao:Number("{{ item.duracao }}")
 
 ];
 
-
-
+    
 function minutos(hora){
 
     let partes = hora.split(":");
@@ -463,6 +462,24 @@ function gerarHorarios(){
 
 
 }
+
+    let semanasAgenda = {{ semanas_agenda }};
+
+let hoje = new Date();
+
+let limite = new Date();
+
+limite.setDate(
+    hoje.getDate() + (semanasAgenda * 7)
+);
+
+
+document.getElementById("data").min =
+hoje.toISOString().split("T")[0];
+
+
+document.getElementById("data").max =
+limite.toISOString().split("T")[0];
 
     </script>
 
