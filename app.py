@@ -324,6 +324,7 @@ def salvar_configuracoes():
     corte_barba = request.form["corte_barba"]
     corte_sobrancelha = request.form["corte_sobrancelha"]
     barba = request.form["barba"]
+    corte_barba_pigmentacao = request.form["corte_barba_pigmentacao"]
 
     if db:
 
