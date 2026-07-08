@@ -456,6 +456,34 @@ def editar_agendamento(id):
         )
 
     return "Agendamento não encontrado"
+@app.route("/salvar_edicao/<id>", methods=["POST"])
+def salvar_edicao(id):
+
+    if "admin" not in session:
+        return redirect("/login")
+
+    nome = request.form["nome"]
+    servico = request.form["servico"]
+    data = request.form["data"]
+    hora = request.form["hora"]
+    duracao = request.form["duracao"]
+
+
+    if db:
+
+        db.collection("agendamentos").document(id).update({
+
+            "nome": nome,
+            "servico": servico,
+            "data": data,
+            "hora": hora,
+            "duracao": int(duracao)
+
+        })
+
+
+    return redirect("/agenda")
+    
 @app.route("/cancelar_agendamento/<id>")
 def cancelar_agendamento(id):
 
