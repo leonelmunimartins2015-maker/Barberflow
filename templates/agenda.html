@@ -230,6 +230,8 @@ Duração: {{ item.duracao }} minutos
 
 {% if session.admin %}
 
+{% if item.telefone %}
+
 <a href="https://wa.me/55{{ item.telefone }}?text=Olá%20{{ item.nome }}!%20Seu%20atendimento%20na%20BarberFlow%20está%20confirmado%20para%20{{ item.data }}%20às%20{{ item.hora }}.%20Serviço:%20{{ item.servico }}.%20💈"
 target="_blank">
 
@@ -238,6 +240,8 @@ target="_blank">
 </button>
 
 </a>
+
+{% endif %}
 
 
 <a href="/editar_agendamento/{{ item.id }}">
@@ -260,7 +264,6 @@ onclick="return confirm('Deseja cancelar este agendamento?')">
 
 
 {% endif %}
-</div>
 
 
 {% else %}
