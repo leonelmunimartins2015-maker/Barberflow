@@ -213,6 +213,19 @@ Horário: {{ item.hora }}
 Duração: {{ item.duracao }} minutos
 </p>
 
+{% if session.admin %}
+
+<a href="/cancelar_agendamento/{{ item.id }}"
+onclick="return confirm('Deseja cancelar este agendamento?')">
+
+<button>
+Cancelar
+</button>
+
+</a>
+
+{% endif %}
+
 </div>
 
 
