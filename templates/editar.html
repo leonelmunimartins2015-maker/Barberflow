@@ -63,7 +63,7 @@ value="{{ agendamento.nome }}"
 required>
 
 
-<select name="servico">
+<select name="servico" id="servico" onchange="atualizarDuracao()">
 
 <option {% if agendamento.servico == "Corte" %}selected{% endif %}>
 Corte
@@ -105,10 +105,10 @@ value="{{ agendamento.hora }}">
 
 
 <input
+id="duracao"
 type="hidden"
 name="duracao"
 value="{{ agendamento.duracao }}">
-
 
 <button>
 Salvar Alteração
@@ -127,7 +127,39 @@ Voltar
 
 </div>
 
+<script>
 
+function atualizarDuracao(){
+
+    let servico = document.getElementById("servico");
+
+    let duracao = 30;
+
+    if(servico.value == "Corte e pigmentação"){
+        duracao = 60;
+    }
+
+    if(servico.value == "Corte e barba"){
+        duracao = 40;
+    }
+
+    if(servico.value == "Corte e sobrancelha"){
+        duracao = 35;
+    }
+
+    if(servico.value == "Barba"){
+        duracao = 15;
+    }
+
+    if(servico.value == "Corte, barba e pigmentação"){
+        duracao = 65;
+    }
+
+    document.getElementById("duracao").value = duracao;
+
+}
+
+</script>
 </body>
 
 </html>
