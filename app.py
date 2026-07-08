@@ -18,6 +18,23 @@ def clientes():
     return render_template("clientes.html")
 
 
+@app.route("/lista_clientes")
+def lista_clientes():
+
+    clientes = []
+
+    if db:
+        dados = db.collection("clientes").stream()
+
+        for cliente in dados:
+            clientes.append(cliente.to_dict())
+
+    return render_template(
+        "lista_clientes.html",
+        clientes=clientes
+    )
+
+
 @app.route("/cadastrar_cliente", methods=["POST"])
 def cadastrar_cliente():
 
